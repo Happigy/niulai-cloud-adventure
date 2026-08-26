@@ -1,0 +1,11 @@
+.test/
+assets/
+自测报告.md
+
+# 当前游戏仅使用 platformer.js；保留本地旧实验文件但不发布。
+js/*
+!js/platformer.js
+
+.DS_Store
+Thumbs.db
+*.log
