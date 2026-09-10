@@ -261,6 +261,14 @@
     return current + delta * amount;
   }
 
+  function touchesPlayer(point) {
+    const dx = point.x - player.pos.x;
+    const dz = point.z - player.pos.z;
+    const closestY = THREE.MathUtils.clamp(point.y, player.pos.y, player.pos.y + 1.95);
+    const dy = point.y - closestY;
+    return dx * dx + dy * dy + dz * dz < 0.8 * 0.8;
+  }
+
   function updateHero(dt, moving) {
     const parts = hero.userData.parts;
     hero.position.copy(player.pos);
@@ -308,7 +316,7 @@
       if (c.collected) return;
       c.mesh.position.y = c.base + Math.sin(clock.elapsedTime * 3 + c.index) * 0.12;
       c.mesh.rotation.y += dt * 2;
-      if (c.mesh.position.distanceTo(player.pos) < 0.8) {
+      if (touchesPlayer(c.mesh.position)) {
         c.collected = true; c.mesh.visible = false; player.stars++;
         score.textContent = `星星 ${player.stars} / 9`; say('获得一颗星星！');
       }
